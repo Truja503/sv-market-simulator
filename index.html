@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Simulation Report — SV Market Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,500;1,600;1,700&family=Barlow+Condensed:wght@300;400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="report-shell">
+
+    <section class="control-deck">
+      <div class="deck-brand">
+        <span class="section-label">SV MARKET SIMULATOR</span>
+        <h1 class="deck-title">Validate</h1>
+        <p class="deck-kicker">WITH CONFIDENCE</p>
+        <p class="deck-sub">Test startup ideas against synthetic Salvadoran personas before you build.</p>
+        <div class="deck-status">
+          <span id="health-dot" class="status-light"></span>
+          <span id="rail-status-label">Checking</span>
+          <span class="status-sep">·</span>
+          <strong id="rail-personas-count">0</strong>
+          <span>personas loaded</span>
+        </div>
+      </div>
+
+      <form id="startup-form" class="deck-form">
+        <div class="field-group span-full">
+          <label for="startupIdea">Startup idea</label>
+          <textarea id="startupIdea" rows="3" placeholder="Describe your product, who it is for, and the problem it solves..."></textarea>
+        </div>
+
+        <div class="field-grid">
+          <div class="field-group">
+            <label for="location">Location</label>
+            <div class="input-wrap">
+              <span aria-hidden="true">⌖</span>
+              <input type="text" id="location" value="San Salvador" placeholder="San Salvador">
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="targetCustomer">Target customer</label>
+            <div class="input-wrap">
+              <span aria-hidden="true">◎</span>
+              <input type="text" id="targetCustomer" value="Young urban professionals" placeholder="Young urban professionals">
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="price">Price</label>
+            <div class="input-wrap">
+              <span aria-hidden="true">$</span>
+              <input type="text" id="price" value="$9.99 / month" placeholder="$9.99 / month">
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="industry">Industry</label>
+            <div class="input-wrap">
+              <span aria-hidden="true">▣</span>
+              <select id="industry">
+                <option>Fintech</option>
+                <option>Agritech</option>
+                <option>Healthtech</option>
+                <option>Edtech</option>
+                <option>E-commerce</option>
+                <option>Logistics</option>
+                <option>Food &amp; Beverage</option>
+                <option>Real Estate</option>
+                <option>Transportation</option>
+                <option>SaaS / Software</option>
+                <option>Retail</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button id="btn-analyze" class="btn btn-primary" type="submit">
+            <span>Generate Market Simulation →</span>
+          </button>
+          <button id="btn-load" class="btn btn-secondary" type="button">Reload Dataset</button>
+        </div>
+
+        <div id="validation-errors" class="validation-errors hidden"></div>
+      </form>
+    </section>
+
+    <article class="report" id="report">
+
+      <header class="report-hero">
+        <div class="rh-left">
+          <span class="section-label accent">AI-GENERATED ANALYSIS</span>
+          <h2 class="report-title">AI Simulation Report</h2>
+          <p class="report-subtitle">Market Intelligence Report</p>
+
+          <div class="verdict-line">
+            <span class="section-label">VERDICT</span>
+            <strong id="verdict-value">Awaiting analysis</strong>
+            <p id="verdict-explanation">Run a simulation to generate the verdict, viability score, and full breakdown.</p>
+          </div>
+        </div>
+
+        <div class="rh-right">
+          <div class="meta-card">
+            <div class="meta-row"><span>Project</span><strong id="report-project-name">[Project / Initiative]</strong></div>
+            <div class="meta-row"><span>Simulation Date</span><strong id="report-date">—</strong></div>
+            <div class="meta-row"><span>Target Market</span><strong id="report-target-market">[Market / Segment]</strong></div>
+            <div class="meta-row"><span>Source / Dataset</span><strong id="report-source">NVIDIA Nemotron · El Salvador</strong></div>
+          </div>
+
+          <div class="score-capsule">
+            <div id="score-ring" class="score-ring" style="--score: 0">
+              <div>
+                <strong id="score-value">__</strong>
+                <span>/ 100</span>
+              </div>
+            </div>
+            <div class="score-meta">
+              <span class="section-label">VIABILITY SCORE</span>
+              <span id="score-delta" class="score-delta">Awaiting analysis</span>
+              <span id="analysis-state" class="state-chip">Preview</span>
+            </div>
+          </div>
+
+          <button id="btn-download-pdf" class="btn btn-secondary btn-pdf hidden" type="button">
+            <span aria-hidden="true">⤓</span> Download PDF Report
+          </button>
+        </div>
+      </header>
+
+      <section class="exec-summary">
+        <span class="section-label">EXECUTIVE SUMMARY</span>
+        <p id="exec-summary">[Add a high-level summary of the simulation findings, key opportunities, and decision implications. This fills automatically once the report runs.]</p>
+      </section>
+
+      <section id="simulation-section" class="summary-band">
+        <header class="band-head">
+          <span class="section-label">PERSONA SIMULATION · <span id="sim-title">500 personas</span></span>
+          <span id="sim-state" class="state-chip">Preview</span>
+        </header>
+
+        <div class="metrics-3">
+          <div class="metric adopt">
+            <span class="metric-dot"></span>
+            <strong id="adopt-pct">__%</strong>
+            <span id="adopt-count" class="metric-count">[count] personas</span>
+            <small>Would use it</small>
+          </div>
+          <div class="metric abandon">
+            <span class="metric-dot"></span>
+            <strong id="abandon-pct">__%</strong>
+            <span id="abandon-count" class="metric-count">[count] personas</span>
+            <small>Try then abandon</small>
+          </div>
+          <div class="metric reject">
+            <span class="metric-dot"></span>
+            <strong id="reject-pct">__%</strong>
+            <span id="reject-count" class="metric-count">[count] personas</span>
+            <small>Would not use</small>
+          </div>
+        </div>
+
+        <div class="funnel-track">
+          <div id="funnel-adopt-bar" class="funnel-seg seg-adopt" style="width:0%"></div>
+          <div id="funnel-abandon-bar" class="funnel-seg seg-abandon" style="width:0%"></div>
+          <div id="funnel-reject-bar" class="funnel-seg seg-reject" style="width:0%"></div>
+        </div>
+      </section>
+
+      <section class="charts-grid">
+        <div class="chart-card wide">
+          <span class="section-label">ADOPTION VIABILITY BY DEPARTMENT</span>
+          <canvas id="dept-chart" class="dept-chart"></canvas>
+        </div>
+        <div class="chart-card">
+          <span class="section-label">ADOPTION BY AGE GROUP</span>
+          <div id="age-breakdown" class="breakdown-bars"><p class="chart-empty">Run the simulation to populate.</p></div>
+        </div>
+        <div class="chart-card">
+          <span class="section-label">URBAN VS RURAL</span>
+          <div id="area-breakdown" class="breakdown-bars"><p class="chart-empty">Run the simulation to populate.</p></div>
+        </div>
+        <div class="chart-card">
+          <span class="section-label">CHANNEL PREFERENCE</span>
+          <div id="channel-breakdown" class="breakdown-bars"><p class="chart-empty">Run the simulation to populate.</p></div>
+        </div>
+      </section>
+
+      <section id="full-analysis-section" class="report-analysis">
+        <div class="score-section">
+          <span class="section-label">SCORE BREAKDOWN — 8 DIMENSIONS (0–10)</span>
+          <div id="score-breakdown-grid" class="score-grid">
+            <div class="sc-card"><div class="sc-name">Pain Intensity</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Willingness to Pay</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Customer Access</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Frequency / Urgency</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Local Fit</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Trust Barrier</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Competition Pressure</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+            <div class="sc-card"><div class="sc-name">Message Clarity</div><div class="sc-val">__<span class="sc-denom">/10</span></div><div class="sc-track"></div><div class="sc-reason">Awaiting analysis</div></div>
+          </div>
+        </div>
+
+        <div class="analysis-grid">
+          <aside class="insights-panel">
+            <span class="section-label">AI INSIGHTS &amp; RECOMMENDATIONS</span>
+            <div class="insight-row"><span>Key Signal</span><p id="insight-key-signal">[…]</p></div>
+            <div class="insight-row"><span>Main Friction</span><p id="insight-friction">[…]</p></div>
+            <div class="insight-row"><span>Pricing Note</span><p id="insight-pricing">[…]</p></div>
+            <div class="insight-row"><span>Market Fit Note</span><p id="insight-fit">[…]</p></div>
+            <div class="insight-row"><span>What To Test Next</span><p id="insight-test">[…]</p></div>
+            <div class="insight-row"><span>Strategic Impact</span><p id="insight-impact">[…]</p></div>
+          </aside>
+
+          <div class="analysis-detail">
+            <div class="detail-block two-col">
+              <div>
+                <span class="section-label">BEST SEGMENTS</span>
+                <div id="best-segments-list" class="seg-list"></div>
+              </div>
+              <div>
+                <span class="section-label">WORST SEGMENTS</span>
+                <div id="worst-segments-list" class="seg-list"></div>
+              </div>
+            </div>
+
+            <div class="detail-block">
+              <span class="section-label">MAIN OBJECTIONS — WHAT PERSONAS WOULD SAY</span>
+              <div id="objections-list" class="objections-list"></div>
+            </div>
+
+            <div class="detail-block two-col">
+              <div>
+                <span class="section-label">PRICING JUDGMENT</span>
+                <div id="pricing-block" class="fact-block"></div>
+              </div>
+              <div>
+                <span class="section-label">POSITIONING</span>
+                <div id="positioning-block" class="fact-block"></div>
+              </div>
+            </div>
+
+            <div class="detail-block">
+              <span class="section-label">GO-TO-MARKET</span>
+              <div id="gtm-block" class="fact-block"></div>
+            </div>
+
+            <div class="detail-block">
+              <span class="section-label">KILL CRITERIA — STOP IF ANY HIT</span>
+              <div id="kill-criteria-list" class="kill-list"></div>
+            </div>
+
+            <div class="detail-block">
+              <span class="section-label">7-DAY VALIDATION PLAN</span>
+              <div id="seven-day-plan" class="plan-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="key-takeaway">
+        <span class="section-label">KEY TAKEAWAY</span>
+        <blockquote id="final-advice">[Add your main takeaway here. What is the single most important insight this report reveals?]</blockquote>
+      </section>
+    </article>
+
+    <section class="support-grid">
+      <section id="dataset-section" class="support-panel" aria-labelledby="dataset-title">
+        <span class="section-label">VISUAL DATASET</span>
+        <h3 id="dataset-title">Nemotron Personas · El Salvador</h3>
+        <p class="dataset-context">A live persona dataset surface wired into filters, simulation, and Claude analysis.</p>
+        <div class="dataset-visual-wrap">
+          <div class="data-artifact" aria-hidden="true">
+            <div class="data-layer layer-one"></div>
+            <div class="data-layer layer-two"></div>
+            <div class="data-layer layer-three"></div>
+            <div class="data-grid"></div>
+            <div class="data-core"></div>
+            <span class="data-node node-a"></span>
+            <span class="data-node node-b"></span>
+            <span class="data-node node-c"></span>
+            <span class="data-node node-d"></span>
+          </div>
+          <div class="dataset-label label-status"><span>Status</span><strong id="dataset-status-value">Standby</strong></div>
+          <div class="dataset-label label-personas"><span>Personas</span><strong id="dataset-personas-value">0</strong></div>
+          <div class="dataset-label label-source"><span>Source</span><strong id="dataset-source-value">NVIDIA / HuggingFace</strong></div>
+          <div class="dataset-label label-splits"><span>Splits</span><strong id="dataset-splits-value">train</strong></div>
+          <div class="dataset-label label-files"><span>Parquet Files</span><strong id="dataset-parquet-value">3</strong></div>
+        </div>
+      </section>
+
+      <section id="filters-section" class="support-panel" aria-labelledby="filters-title">
+        <span class="section-label">FILTER PERSONAS</span>
+        <h3 id="filters-title">Audience lens</h3>
+        <p id="filter-context" class="filter-context">Dataset-ready filters refine the analysis lens.</p>
+
+        <div class="filters-grid">
+          <div class="field-group">
+            <label for="f-dept">Department</label>
+            <select id="f-dept"><option value="">All</option></select>
+          </div>
+          <div class="field-group">
+            <label for="f-muni">Municipality</label>
+            <select id="f-muni"><option value="">All</option></select>
+          </div>
+          <div class="field-group">
+            <label for="f-area">Area</label>
+            <select id="f-area">
+              <option value="">All</option>
+              <option value="Urban">Urban</option>
+              <option value="Rural">Rural</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="f-edu">Education</label>
+            <select id="f-edu"><option value="">All</option></select>
+          </div>
+          <div class="field-group">
+            <label for="f-occ">Occupation</label>
+            <select id="f-occ"><option value="">All</option></select>
+          </div>
+          <div class="field-group">
+            <label for="f-age">Age Range</label>
+            <select id="f-age">
+              <option value="">All</option>
+              <option value="18-25">18-25</option>
+              <option value="26-35">26-35</option>
+              <option value="36-45">36-45</option>
+              <option value="46-60">46-60</option>
+              <option value="60+">60+</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btn-clear-filters" class="btn btn-filter" type="button">Clear Filters</button>
+      </section>
+    </section>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
