@@ -173,39 +173,6 @@ curl http://localhost:3001/api/dataset/status
 
 ---
 
-## Suggested Screenshots
-
-Add screenshots here before sharing the repo publicly:
-
-```text
-/screenshots/home.png
-/screenshots/report-summary.png
-/screenshots/segments.png
-/screenshots/charts.png
-```
-
-Recommended sections to show:
-
-* Main simulator screen
-* AI Simulation Report
-* Best and worst market segments
-* Pricing and adoption signals
-* Validation recommendations
-
----
-
-## Roadmap
-
-Possible next improvements:
-
-* Export full PDF reports
-* Add saved simulations
-* Compare multiple startup ideas
-* Add real survey data beside synthetic persona analysis
-* Improve scoring methodology
-* Add Spanish/English report mode
-* Deploy public demo
-
 ---
 
 ## Disclaimer
