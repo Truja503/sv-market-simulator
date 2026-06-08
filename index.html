@@ -13,79 +13,105 @@
   <div class="report-shell">
 
     <section class="control-deck">
-      <div class="deck-brand">
-        <span class="section-label">SV MARKET SIMULATOR</span>
-        <h1 class="deck-title">Validate</h1>
-        <p class="deck-kicker">WITH CONFIDENCE</p>
-        <p class="deck-sub">Test startup ideas against synthetic Salvadoran personas before you build.</p>
-        <div class="deck-status">
-          <span id="health-dot" class="status-light"></span>
-          <span id="rail-status-label">Checking</span>
-          <span class="status-sep">·</span>
-          <strong id="rail-personas-count">0</strong>
-          <span>personas loaded</span>
+      <div class="deck-left">
+        <div class="deck-brand">
+          <span class="section-label">SV MARKET SIMULATOR</span>
+          <h1 class="deck-title">Validate</h1>
+          <p class="deck-kicker">WITH CONFIDENCE</p>
+          <p class="deck-sub">Test startup ideas against synthetic Salvadoran personas before you build.</p>
+          <div class="deck-status">
+            <span id="health-dot" class="status-light"></span>
+            <span id="rail-status-label">Checking</span>
+            <span class="status-sep">·</span>
+            <strong id="rail-personas-count">0</strong>
+            <span>personas loaded</span>.
+          </div>
         </div>
+
+        <form id="startup-form" class="deck-form">
+          <div class="field-group span-full">
+            <label for="startupIdea">Startup idea</label>
+            <textarea id="startupIdea" rows="3" placeholder="Describe your product, who it is for, and the problem it solves..."></textarea>
+          </div>
+
+          <div class="field-grid">
+            <div class="field-group">
+              <label for="location">Location</label>
+              <div class="input-wrap">
+                <span aria-hidden="true">⌖</span>
+                <input type="text" id="location" value="San Salvador" placeholder="San Salvador">
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="targetCustomer">Target customer</label>
+              <div class="input-wrap">
+                <span aria-hidden="true">◎</span>
+                <input type="text" id="targetCustomer" value="Young urban professionals" placeholder="Young urban professionals">
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="price">Price</label>
+              <div class="input-wrap">
+                <span aria-hidden="true">$</span>
+                <input type="text" id="price" value="$9.99 / month" placeholder="$9.99 / month">
+              </div>
+            </div>
+            <div class="field-group">
+              <label for="industry">Industry</label>
+              <div class="input-wrap">
+                <span aria-hidden="true">▣</span>
+                <select id="industry">
+                  <option>Fintech</option>
+                  <option>Agritech</option>
+                  <option>Healthtech</option>
+                  <option>Edtech</option>
+                  <option>E-commerce</option>
+                  <option>Logistics</option>
+                  <option>Food &amp; Beverage</option>
+                  <option>Real Estate</option>
+                  <option>Transportation</option>
+                  <option>SaaS / Software</option>
+                  <option>Retail</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button id="btn-analyze" class="btn btn-primary" type="submit">
+              <span>Generate Market Simulation →</span>
+            </button>
+            <button id="btn-load" class="btn btn-secondary" type="button">Reload Dataset</button>
+          </div>
+
+          <div id="validation-errors" class="validation-errors hidden"></div>
+        </form>
       </div>
 
-      <form id="startup-form" class="deck-form">
-        <div class="field-group span-full">
-          <label for="startupIdea">Startup idea</label>
-          <textarea id="startupIdea" rows="3" placeholder="Describe your product, who it is for, and the problem it solves..."></textarea>
+      <section id="dataset-section" class="support-panel deck-dataset" aria-labelledby="dataset-title">
+        <span class="section-label">VISUAL DATASET</span>
+        <h3 id="dataset-title">Nemotron Personas · El Salvador</h3>
+        <p class="dataset-context">A live persona dataset surface wired into filters, simulation, and Claude analysis.</p>
+        <div class="dataset-visual-wrap">
+          <div class="data-artifact" aria-hidden="true">
+            <div class="data-layer layer-one"></div>
+            <div class="data-layer layer-two"></div>
+            <div class="data-layer layer-three"></div>
+            <div class="data-grid"></div>
+            <div class="data-core"></div>
+            <span class="data-node node-a"></span>
+            <span class="data-node node-b"></span>
+            <span class="data-node node-c"></span>
+            <span class="data-node node-d"></span>
+          </div>
+          <div class="dataset-label label-status"><span>Status</span><strong id="dataset-status-value">Standby</strong></div>
+          <div class="dataset-label label-personas"><span>Personas</span><strong id="dataset-personas-value">0</strong></div>
+          <div class="dataset-label label-source"><span>Source</span><strong id="dataset-source-value">NVIDIA / HuggingFace</strong></div>
+          <div class="dataset-label label-splits"><span>Splits</span><strong id="dataset-splits-value">train</strong></div>
+          <div class="dataset-label label-files"><span>Parquet Files</span><strong id="dataset-parquet-value">3</strong></div>
         </div>
-
-        <div class="field-grid">
-          <div class="field-group">
-            <label for="location">Location</label>
-            <div class="input-wrap">
-              <span aria-hidden="true">⌖</span>
-              <input type="text" id="location" value="San Salvador" placeholder="San Salvador">
-            </div>
-          </div>
-          <div class="field-group">
-            <label for="targetCustomer">Target customer</label>
-            <div class="input-wrap">
-              <span aria-hidden="true">◎</span>
-              <input type="text" id="targetCustomer" value="Young urban professionals" placeholder="Young urban professionals">
-            </div>
-          </div>
-          <div class="field-group">
-            <label for="price">Price</label>
-            <div class="input-wrap">
-              <span aria-hidden="true">$</span>
-              <input type="text" id="price" value="$9.99 / month" placeholder="$9.99 / month">
-            </div>
-          </div>
-          <div class="field-group">
-            <label for="industry">Industry</label>
-            <div class="input-wrap">
-              <span aria-hidden="true">▣</span>
-              <select id="industry">
-                <option>Fintech</option>
-                <option>Agritech</option>
-                <option>Healthtech</option>
-                <option>Edtech</option>
-                <option>E-commerce</option>
-                <option>Logistics</option>
-                <option>Food &amp; Beverage</option>
-                <option>Real Estate</option>
-                <option>Transportation</option>
-                <option>SaaS / Software</option>
-                <option>Retail</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="action-row">
-          <button id="btn-analyze" class="btn btn-primary" type="submit">
-            <span>Generate Market Simulation →</span>
-          </button>
-          <button id="btn-load" class="btn btn-secondary" type="button">Reload Dataset</button>
-        </div>
-
-        <div id="validation-errors" class="validation-errors hidden"></div>
-      </form>
+      </section>
     </section>
 
     <article class="report" id="report">
@@ -268,30 +294,6 @@
     </article>
 
     <section class="support-grid">
-      <section id="dataset-section" class="support-panel" aria-labelledby="dataset-title">
-        <span class="section-label">VISUAL DATASET</span>
-        <h3 id="dataset-title">Nemotron Personas · El Salvador</h3>
-        <p class="dataset-context">A live persona dataset surface wired into filters, simulation, and Claude analysis.</p>
-        <div class="dataset-visual-wrap">
-          <div class="data-artifact" aria-hidden="true">
-            <div class="data-layer layer-one"></div>
-            <div class="data-layer layer-two"></div>
-            <div class="data-layer layer-three"></div>
-            <div class="data-grid"></div>
-            <div class="data-core"></div>
-            <span class="data-node node-a"></span>
-            <span class="data-node node-b"></span>
-            <span class="data-node node-c"></span>
-            <span class="data-node node-d"></span>
-          </div>
-          <div class="dataset-label label-status"><span>Status</span><strong id="dataset-status-value">Standby</strong></div>
-          <div class="dataset-label label-personas"><span>Personas</span><strong id="dataset-personas-value">0</strong></div>
-          <div class="dataset-label label-source"><span>Source</span><strong id="dataset-source-value">NVIDIA / HuggingFace</strong></div>
-          <div class="dataset-label label-splits"><span>Splits</span><strong id="dataset-splits-value">train</strong></div>
-          <div class="dataset-label label-files"><span>Parquet Files</span><strong id="dataset-parquet-value">3</strong></div>
-        </div>
-      </section>
-
       <section id="filters-section" class="support-panel" aria-labelledby="filters-title">
         <span class="section-label">FILTER PERSONAS</span>
         <h3 id="filters-title">Audience lens</h3>

@@ -4,12 +4,11 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const https = require('https');
-
-let Anthropic = null;
-try { Anthropic = require('@anthropic-ai/sdk'); } catch (_) {}
+const os = require('os');
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.DATA_DIR ||
+  (process.env.VERCEL ? path.join(os.tmpdir(), 'sv-market-simulator') : path.join(__dirname, 'data'));
 const CACHE_FILE = path.join(DATA_DIR, 'personas-cache.json');
 const META_FILE = path.join(DATA_DIR, 'dataset-meta.json');
 const MODEL = 'claude-sonnet-4-6';
@@ -43,7 +42,10 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(cors());
-app.use(express.static(path.join(__dirname)));
+
+app.get(['/app.js', '/styles.css'], (req, res) => {
+  res.sendFile(path.join(__dirname, req.path.slice(1)));
+});
 
 function s(v) {
   return (v !== null && v !== undefined) ? String(v) : '';
@@ -354,17 +356,6 @@ function parseClaudeJSON(text) {
 async function callClaude(input, preAnalysis, selectedPersonas) {
   const sample = selectedPersonas.slice(0, 35);
   const userMessage = buildUserMessage(input, preAnalysis, sample);
-
-  if (Anthropic) {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const msg = await client.messages.create({
-      model: MODEL,
-      max_tokens: 8192,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userMessage }]
-    });
-    return parseClaudeJSON(msg.content[0].text);
-  }
 
   const body = JSON.stringify({
     model: MODEL, max_tokens: 8192, system: SYSTEM_PROMPT,
@@ -875,7 +866,11 @@ app.post('/api/report', (req, res) => {
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
-app.listen(PORT, () => {
-  console.log(`SV Market Simulator → http://localhost:${PORT}`);
-  if (!process.env.ANTHROPIC_API_KEY) console.warn('[WARN] ANTHROPIC_API_KEY not set in .env');
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`SV Market Simulator → http://localhost:${PORT}`);
+    if (!process.env.ANTHROPIC_API_KEY) console.warn('[WARN] ANTHROPIC_API_KEY not set in .env');
+  });
+}
+
+module.exports = app;

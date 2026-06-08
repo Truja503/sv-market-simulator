@@ -1,6 +1,8 @@
-node_modules
-.env
 .DS_Store
-*.mov
+.env
+.git
+node_modules
 data/personas-cache.json
 data/dataset-meta.json
+*.mov
+aireport.png

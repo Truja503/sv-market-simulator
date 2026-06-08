@@ -154,8 +154,8 @@ select:focus-visible {
   position: relative;
   display: grid;
   grid-template-columns: minmax(500px, 0.92fr) minmax(560px, 1.08fr);
-  gap: clamp(52px, 5vw, 112px);
-  align-items: start;
+  gap: clamp(36px, 3vw, 72px);
+  align-items: stretch;
   padding: clamp(30px, 3vw, 56px);
   border: 1px solid rgba(120, 180, 255, 0.16);
   border-radius: 22px;
@@ -195,10 +195,20 @@ select:focus-visible {
   background: radial-gradient(circle, rgba(0, 229, 255, 0.16), transparent 60%);
 }
 
+.deck-left,
 .deck-brand,
+.deck-dataset,
 .deck-form {
   position: relative;
   z-index: 1;
+}
+
+.deck-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(44px, 5vw, 84px);
+  min-width: 0;
 }
 
 .deck-brand .deck-title {
@@ -1155,7 +1165,7 @@ select:focus-visible {
 
 .support-grid {
   display: grid;
-  grid-template-columns: minmax(520px, 1fr) minmax(680px, 1.22fr);
+  grid-template-columns: 1fr;
   gap: clamp(24px, 2.2vw, 42px);
 }
 
@@ -1183,6 +1193,62 @@ select:focus-visible {
   font-size: clamp(28px, 2.4vw, 42px);
   letter-spacing: 0;
   color: var(--text);
+}
+
+.deck-dataset {
+  align-self: stretch;
+  padding: clamp(20px, 1.6vw, 30px);
+  border-radius: 18px;
+}
+
+.deck-dataset h3 {
+  font-size: clamp(24px, 2vw, 34px);
+}
+
+.deck-dataset .dataset-context {
+  max-width: 100%;
+}
+
+.deck-dataset .dataset-visual-wrap {
+  flex: 1;
+  min-height: 480px;
+}
+
+.deck-dataset .data-artifact {
+  width: 250px;
+  height: 184px;
+}
+
+.deck-dataset .dataset-label {
+  min-width: 132px;
+  padding: 12px 13px;
+}
+
+.deck-dataset .label-source {
+  width: min(330px, calc(100% - 44px));
+}
+
+.deck-dataset .label-status {
+  top: calc(50% - 190px);
+}
+
+.deck-dataset .label-personas {
+  top: calc(50% - 190px);
+}
+
+.deck-dataset .label-source {
+  top: calc(50% + 164px);
+  bottom: auto;
+}
+
+.deck-dataset .label-splits {
+  top: calc(50% + 84px);
+  bottom: auto;
+}
+
+.deck-dataset .label-files {
+  top: calc(50% + 164px);
+  bottom: auto;
 }
 
 .dataset-context {
@@ -1429,10 +1495,6 @@ select:focus-visible {
 .btn-filter { align-self: flex-start; margin-top: 4px; }
 
 @media (max-width: 1320px) {
-  .control-deck {
-    grid-template-columns: 1fr;
-  }
-
   .support-grid {
     grid-template-columns: 1fr;
   }
@@ -1488,6 +1550,9 @@ select:focus-visible {
   }
   .dataset-visual-wrap {
     min-height: 430px;
+  }
+  .deck-dataset .dataset-visual-wrap {
+    min-height: 360px;
   }
   .data-artifact {
     width: 182px;
